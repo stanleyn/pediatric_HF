@@ -85,33 +85,48 @@ for cluster-level visualization, I like to use 200 iterations. 50 clusters and 1
 Build=runRepMetaclust(200,50,FileNames,doCPF='specify',numCPF=1000,MN,ToUse,35)
 ```
 
-##################################
-#Basic plots
-####################################
-#Let's make the VoPo plots so that we can see what is important
+# Step 3: Basic plots
 
-#Phenotype related plots
+Let's make the VoPo plots so that we can see what is important
+
+First, Phenotype related plots. We are coloring each cluster by its phenotypic marker expresssion.  
+
+```R
 source('VoPo_StandardAnalysis/vizClusterPhenotype.R')
-#Layout=vizClusterPhenotype(Build,ToUse,'~/Clean_BClust/pediatric_HF/Phenotype')
+Layout=vizClusterPhenotype(Build,ToUse,'~/Clean_BClust/pediatric_HF/Phenotype')
+```
 
-#Let's do analysis of unstim samples first
+Let's do analysis of unstim samples first. Grab only the files that correspond to the stims
+
+```R
 UnstimSamps=which(Stim=='Unstim')
+```
 
-#let's extract function-based features
+Load code to extract features from our VoPo clustering result related to function
+
+```R
 source('VoPo_StandardAnalysis/vizFunctionMaps.R')
 source('VoPo_StandardAnalysis/getFunctionalFeature.R')
+```
 
-#Analysis of functional differences#
+Use those features to analyze functional differences
 
-#extract functional features from VoPo object
+```R
 fFeat=getFunctionalFeature(Build,FNames,FuncInds)
 ufFeat=fFeat[UnstimSamps,]
+```
 
-#and class labels that correspond
+Get class labels that correspond to unstim samples
+
+```R
 uResp=Class[UnstimSamps]
+```
 
-#make maps
-vizFunctionMaps(Layout,ufFeat,MN,FuncInds,uResp,'~/Clean_BClust/pediatric_HF/Func_unstim')
+Make functional marker maps. Replace the last input with the path to where you want to store these plots (though you can write them to that example directory
+
+```R
+vizFunctionMaps(Layout,ufFeat,MN,FuncInds,uResp,'pediatric_HF/Func_unstim')
+```
 
 #Analysis of frequency differences#
 source('VoPo_StandardAnalysis/vizFrequencyMap.R')
