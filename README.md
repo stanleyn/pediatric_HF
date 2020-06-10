@@ -1,10 +1,12 @@
 Date: June 8, 2020
 
-purpose: running pediatric HF analysis
+*purpose: running pediatric HF analysis
 
-dependencies: flowCore, foreach, doParallel, iterators, plyr, randomForest, matrixStats, ROCR, FastKNN, miscTools, viridis, ggplot2, reshape2
+*dependencies: flowCore, foreach, doParallel, iterators, plyr, randomForest, matrixStats, ROCR, FastKNN, miscTools, viridis, ggplot2, reshape2
 
 * Change into your pediatric_HF directory as paths will be relative to this
+
+*Note that I have this in script form as Run_PHF.R. Just modify the paths and the save directories and you can use that. 
 
 ```R
 library('flowCore')
