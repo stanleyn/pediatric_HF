@@ -4,6 +4,8 @@ purpose: running pediatric HF analysis
 
 dependencies: flowCore, foreach, doParallel, iterators, plyr, randomForest, matrixStats, ROCR, FastKNN, miscTools, viridis, ggplot2, reshape2
 
+Change into your pediatric_HF directory as paths will be relative to this
+
 ```R
 library('flowCore')
 ```
@@ -31,7 +33,7 @@ FileNames=FileNames[-ICInds]
 FNames=FNames[-ICInds]
 ```
 
-Now we will get the metadata corresponding to each file from the file name
+Now we will get the metadata corresponding to each file from the file name. This will allow us to record the Stim, and Class for each FCS file. 
 
 ```R
 sList=strsplit(FNames,'_')
@@ -46,20 +48,26 @@ Class=c(Class,0)
 else{Class=c(Class,1)}
 }
 ```
+Get your marker names, put them in a comprehensible human-understandable format
 
-#get your marker names, put them in a comprehensible human-understandable format
+```R
 frame=read.FCS(FileNames[1]) 
 MN=pData(parameters(frame))[,2] 
+```
 
-#let's use our annotations that we specified for whether each marker is functional or phenotypic
+let's use our annotations that we specified for whether each marker is functional or phenotypic
+
+```R
 markAnn=read.csv('MN_annotate.csv',header=TRUE,stringsAsFactors=FALSE)
-
 PhenoInds=which(markAnn[,2]==1)
 FuncInds=which(markAnn[,2]==2)
+```
 
-#you can check that these indeed map to the right columns
+you can check that these indeed map to the right columns
+```R
 print(MN[PhenoInds])
 print(MN[FuncInds])
+''' 
 
 ########################################
 #Step 2: Clustering Part
