@@ -69,11 +69,10 @@ print(MN[PhenoInds])
 print(MN[FuncInds])
 ''' 
 
-########################################
-#Step 2: Clustering Part
-#########################################
-# We will cluster all FCS files together and do splitting of samples later
-# This should take 10-15 mins to run (depending on what happens on nalab2)
+
+# Step 2: Clustering Part=
+* We will cluster all FCS files together and do splitting of samples later
+* This should take 10-15 mins to run (depending on what happens on nalab2)
 
 #In this example we will be doing our clustering on phenotypic markers
 ToUse=PhenoInds
