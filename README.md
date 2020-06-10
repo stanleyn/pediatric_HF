@@ -128,10 +128,12 @@ Make functional marker maps. Replace the last input with the path to where you w
 vizFunctionMaps(Layout,ufFeat,MN,FuncInds,uResp,'pediatric_HF/Func_unstim')
 ```
 
-#Analysis of frequency differences#
+Analysis of frequency differences. Again, change last argument to wherever you want to store this plot 
+
+```R
 source('VoPo_StandardAnalysis/vizFrequencyMap.R')
 source('VoPo_StandardAnalysis/getFrequencyFeature.R')
 FrF=getFrequencyFeature(Build,FNames)
 uFrF=FrF[UnstimSamps,]
-
-vizFrequencyMap(FrF,Layout,uResp,'~/Clean_BClust/pediatric_HF')
+vizFrequencyMap(FrF,Layout,uResp,getwd())
+```
