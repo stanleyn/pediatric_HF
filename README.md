@@ -4,7 +4,7 @@ purpose: running pediatric HF analysis
 
 dependencies: flowCore, foreach, doParallel, iterators, plyr, randomForest, matrixStats, ROCR, FastKNN, miscTools, viridis, ggplot2, reshape2
 
-# Change into your pediatric_HF directory as paths will be relative to this
+* Change into your pediatric_HF directory as paths will be relative to this
 
 ```R
 library('flowCore')
