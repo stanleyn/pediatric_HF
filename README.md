@@ -131,7 +131,7 @@ Make functional marker maps. Replace the last input with the path to where you w
 vizFunctionMaps(Layout,ufFeat,MN,FuncInds,uResp,'pediatric_HF/Func_unstim')
 ```
 
-Analysis of frequency differences. Again, change last argument to wherever you want to store this plot 
+Analysis of frequency differences. Again, change last argument to wherever you want to store this plot. Currently I have it writing to your current working directory (which should be pediatric_HF folder)
 
 ```R
 source('VoPo_StandardAnalysis/vizFrequencyMap.R')
