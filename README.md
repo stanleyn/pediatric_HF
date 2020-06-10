@@ -6,7 +6,7 @@ Date: June 8, 2020
 
 * Change into your pediatric_HF directory as paths will be relative to this
 
-*Note that I have this in script form as Run_PHF.R. Just modify the paths and the save directories and you can use that. 
+* Note that I have this in script form as Run_PHF.R. Just modify the paths and the save directories and you can use that. 
 
 ```R
 library('flowCore')
