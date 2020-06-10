@@ -20,22 +20,29 @@ library('flowCore')
 ## Step 1:Pre-processing: finding data, separating functional and phenotypic markers, etc
 We are going to do our analysis on mono-nuclear cells, which has granulocytes gated out
 
-#let's add a path to our files: we will input this to VoPo when we do clustering
+let's add a path to our files: we will input this to VoPo when we do clustering
 
 ```R
 FileNames=list.files('~/stanleyn@stanford.edu/pediatric_HF/MNC','.fcs',full.names=TRUE)
 ```
 
-#I also create a short-hand name for book-keeping purposes (feature matrix rownames)
+I also create a short-hand name for book-keeping purposes (feature matrix rownames)
 
+```R
 FNames=list.files('~/stanleyn@stanford.edu/pediatric_HF/MNC','.fcs',full.names=FALSE)
+```
 
-#We are going to exclude the internal controls from our analysis
+We are going to exclude the internal controls from our analysis
+
+```R
 ICInds=which(grepl('IC',FNames))
 FileNames=FileNames[-ICInds]
 FNames=FNames[-ICInds]
+```
 
-#now we will get the metadata corresponding to each file from the file name
+Now we will get the metadata corresponding to each file from the file name
+
+```R
 sList=strsplit(FNames,'_')
 Stim=c()
 Class=c()
@@ -47,6 +54,7 @@ Class=c(Class,0)
 }
 else{Class=c(Class,1)}
 }
+```
 
 #get your marker names, put them in a comprehensible human-understandable format
 frame=read.FCS(FileNames[1]) 
