@@ -15,7 +15,7 @@ dependencies:
 library('flowCore')
 ```
 
-#Step 1:Pre-processing: finding data, separating functional and phenotypic markers, etc
+##Step 1:Pre-processing: finding data, separating functional and phenotypic markers, etc
 
 
 #We are going to do our analysis on mono-nuclear cells, which has granulocytes gated out
