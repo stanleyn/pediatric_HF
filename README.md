@@ -67,20 +67,23 @@ you can check that these indeed map to the right columns
 ```R
 print(MN[PhenoInds])
 print(MN[FuncInds])
-''' 
-
+```
 
 # Step 2: Clustering Part=
 * We will cluster all FCS files together and do splitting of samples later
 * This should take 10-15 mins to run (depending on what happens on nalab2)
 
-#In this example we will be doing our clustering on phenotypic markers
+In this example we will be doing our clustering on phenotypic markers. We specify that here and load the function
+
+```R
 ToUse=PhenoInds
-
 source('VoPo_StandardAnalysis/runRepMetaclust.R')
+```
+for cluster-level visualization, I like to use 200 iterations. 50 clusters and 1000 numCPF are default parameters
 
-#for cluster-level visualization, I like to use 200 iterations. 50 clusters and 1000 numCPF are default parameters
+```R
 Build=runRepMetaclust(200,50,FileNames,doCPF='specify',numCPF=1000,MN,ToUse,35)
+```
 
 ##################################
 #Basic plots
