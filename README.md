@@ -2,17 +2,8 @@ Date: June 8, 2020
 
 purpose: running pediatric HF analysis
 
-dependencies:
-  -flowCore
-  -foreach
-  -doParallel
-  -iterators
-  -plyr
-  -randomForest
-  -matrixStats
-  -ROCR
-  -FastKNN
-  -miscTools
+dependencies: flowCore, foreach, doParallel, iterators, plyr, randomForest, matrixStats, ROCR, FastKNN, miscTools, viridis, ggplot2, reshape2
+
 ```R
 library('flowCore')
 ```
