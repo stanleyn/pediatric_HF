@@ -1,8 +1,19 @@
 Date: June 8, 2020
 purpose: running pediatric HF analysis
-
+dependencies:
+  -flowCore
+  -foreach
+  -doParallel
+  -iterators
+  -plyr
+  -randomForest
+  -matrixStats
+  -ROCR
+  -FastKNN
+  -miscTools
+```R
 library('flowCore')
-
+```
 ######################################
 #Step 1:Pre-processing: finding data, separating functional and phenotypic markers, etc
 ######################################
