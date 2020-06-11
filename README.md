@@ -41,9 +41,11 @@ Now we will get the metadata corresponding to each file from the file name. This
 sList=strsplit(FNames,'_')
 Stim=c()
 Class=c()
+PID=c()
 for(i in 1:length(sList)){
 Stim=c(Stim,sList[[i]][5])
 Val=grepl('H',sList[[i]][4])
+PID=c(PID,sList[[i]][4])
 if(Val==TRUE){
 Class=c(Class,0)
 }
@@ -140,3 +142,16 @@ FrF=getFrequencyFeature(Build,FNames)
 uFrF=FrF[UnstimSamps,]
 vizFrequencyMap(FrF,Layout,uResp,getwd())
 ```
+
+#classification
+
+You can use the feature matrices together for a classification task for this unstim comparison
+
+let's make a joint set of features
+
+```R
+Joint=cbind(FrF,uFrF)
+```
+
+Your response variable is `uResp`. Use your favorite cross validation technique with features, `Joint` and response `uResp`.
+

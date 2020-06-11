@@ -24,9 +24,11 @@ FNames=FNames[-ICInds]
 sList=strsplit(FNames,'_')
 Stim=c()
 Class=c()
+PID=c()
 for(i in 1:length(sList)){
 Stim=c(Stim,sList[[i]][5])
 Val=grepl('H',sList[[i]][4])
+PID=c(PID,sList[[i]][4])
 if(Val==TRUE){
 Class=c(Class,0)
 }
@@ -59,7 +61,7 @@ ToUse=PhenoInds
 source('VoPo_StandardAnalysis/runRepMetaclust.R')
 
 #for cluster-level visualization, I like to use 200 iterations. 50 clusters and 1000 numCPF are default parameters
-Build=runRepMetaclust(200,50,FileNames,doCPF='specify',numCPF=1000,MN,ToUse,35)
+#Build=runRepMetaclust(200,50,FileNames,doCPF='specify',numCPF=1000,MN,ToUse,35)
 
 ##################################
 #Basic plots
@@ -87,12 +89,87 @@ ufFeat=fFeat[UnstimSamps,]
 uResp=Class[UnstimSamps]
 
 #make maps
-vizFunctionMaps(Layout,ufFeat,MN,FuncInds,uResp,'~/Clean_BClust/pediatric_HF/Func_unstim')
+#vizFunctionMaps(Layout,ufFeat,MN,FuncInds,uResp,'~/Clean_BClust/pediatric_HF/Func_unstim')
 
 #Analysis of frequency differences#
-source('VoPo_StandardAnalysis/vizFrequencyMap.R')
-source('VoPo_StandardAnalysis/getFrequencyFeature.R')
-FrF=getFrequencyFeature(Build,FNames)
-uFrF=FrF[UnstimSamps,]
+#source('VoPo_StandardAnalysis/vizFrequencyMap.R')
+#source('VoPo_StandardAnalysis/getFrequencyFeature.R')
+#FrF=getFrequencyFeature(Build,FNames)
+#uFrF=FrF[UnstimSamps,]
 
-vizFrequencyMap(FrF,Layout,uResp,'~/Clean_BClust/pediatric_HF')
+#vizFrequencyMap(FrF,Layout,uResp,'~/Clean_BClust/pediatric_HF')
+
+#############################
+#classification
+##############################
+
+#You can use the feature matrices together for a classification task for this unstim comparison
+
+#let's make a joint set of features
+#Joint=cbind(FrF,uFrF)
+
+#Your response variable is uResp. Use your favorite cross validation technique with features, Joint and response uResp.
+
+###########################
+#stim analyses
+##########################
+
+#In general, for each stim, we subtract the unstim features for each patient from their stim features to build a new matrix
+
+#The first step is to create a match matrix for indices so we are subtracting correctly.
+#The output will be something called stim list, which for each stim the ith row will record index for unstimsample in column 1 and stim sample in column 2
+
+UStim=unique(Stim)[1:4] #there are 4 stims and we exclude unstim
+PID=paste('p',PID,sep='_')
+UPat=unique(PID)
+StimList=list()
+
+for(u in 1:length(UStim)){
+StimCand=grep(UStim[u],FNames)
+UnstimInd=c()
+MatchInds=c()
+for(j in 1:length(UPat)){
+c1=grep('Unstim',FNames)
+c2=which(PID==UPat[j])          
+intVal=intersect(c1,c2)
+if(length(intVal)==0){
+UnStimInd=c(UnstimInd,NA)
+}
+else{UnstimInd=c(UnstimInd,intVal)}
+
+c11=grep(UStim[u],FNames)
+intVal2=intersect(c11,c2)
+if(length(intVal2)==0){
+MatchInds=c(MatchInds,NA)
+}
+else{MatchInds=c(MatchInds,intVal2)}
+}
+
+newArray=cbind(UnstimInd,MatchInds)
+StimList[[u]]=newArray
+}
+
+names(StimList)=UStim
+
+
+#This means that in the ith element of your list, you will have unstim indices (column 1) and corresponding stim indices in column 2. 
+
+#Always good to check if it's right. First stim is GMCSF
+#Let's see if indices actually map to the correct thing
+#It should pull the unstim sample and GCSF
+Test1=StimList[[1]][5,1]
+Test2=StimList[[1]][5,2]
+print(FNames[Test1])
+print(FNames[Test2])
+
+
+#Now you can get the associated feature matrices for each stim by subtracting their features
+#for example for frequency map for GCSF (which is the first element in our list)
+#again, we are subtracting the stim value 
+GCSF_FrF=FrF[StimList[[1]][,2],]-FrF[StimList[[1]][,1],]
+
+#Then you can make the map for frequency
+vizFunctionMaps(Layout,GCSF_FrF,MN,FuncInds,uResp,'~/Clean_BClust/pediatric_HF/Func_unstim')
+
+
+
