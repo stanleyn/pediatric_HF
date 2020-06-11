@@ -212,3 +212,19 @@ Test1=StimList[[1]][5,1]
 Test2=StimList[[1]][5,2]
 print(FNames[Test1])
 ```
+
+* Now you can get the associated feature matrices for each stim by subtracting their features
+
+* for example for frequency map for GCSF (which is the first element in our list)
+
+* again, we are subtracting the stim value 
+
+```R
+GCSF_FrF=FrF[StimList[[1]][,2],]-FrF[StimList[[1]][,1],]
+```
+
+Then you can make the map for frequency
+
+```R
+vizFunctionMaps(Layout,GCSF_FrF,MN,FuncInds,uResp,'~/Clean_BClust/pediatric_HF/Func_unstim')
+```

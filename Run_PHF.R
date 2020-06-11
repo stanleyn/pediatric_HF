@@ -61,7 +61,7 @@ ToUse=PhenoInds
 source('VoPo_StandardAnalysis/runRepMetaclust.R')
 
 #for cluster-level visualization, I like to use 200 iterations. 50 clusters and 1000 numCPF are default parameters
-#Build=runRepMetaclust(200,50,FileNames,doCPF='specify',numCPF=1000,MN,ToUse,35)
+Build=runRepMetaclust(200,50,FileNames,doCPF='specify',numCPF=1000,MN,ToUse,35)
 
 ##################################
 #Basic plots
@@ -70,7 +70,7 @@ source('VoPo_StandardAnalysis/runRepMetaclust.R')
 
 #Phenotype related plots
 source('VoPo_StandardAnalysis/vizClusterPhenotype.R')
-#Layout=vizClusterPhenotype(Build,ToUse,'~/Clean_BClust/pediatric_HF/Phenotype')
+Layout=vizClusterPhenotype(Build,ToUse,'~/Clean_BClust/pediatric_HF/Phenotype')
 
 #Let's do analysis of unstim samples first
 UnstimSamps=which(Stim=='Unstim')
@@ -89,15 +89,17 @@ ufFeat=fFeat[UnstimSamps,]
 uResp=Class[UnstimSamps]
 
 #make maps
-#vizFunctionMaps(Layout,ufFeat,MN,FuncInds,uResp,'~/Clean_BClust/pediatric_HF/Func_unstim')
+vizFunctionMaps(Layout,ufFeat,MN,FuncInds,uResp,'~/Clean_BClust/pediatric_HF/Func_unstim')
 
 #Analysis of frequency differences#
-#source('VoPo_StandardAnalysis/vizFrequencyMap.R')
-#source('VoPo_StandardAnalysis/getFrequencyFeature.R')
-#FrF=getFrequencyFeature(Build,FNames)
-#uFrF=FrF[UnstimSamps,]
+source('VoPo_StandardAnalysis/vizFrequencyMap.R')
+source('VoPo_StandardAnalysis/getFrequencyFeature.R')
+FrF=getFrequencyFeature(Build,FNames)
+uFrF=FrF[UnstimSamps,]
 
-#vizFrequencyMap(FrF,Layout,uResp,'~/Clean_BClust/pediatric_HF')
+vizFrequencyMap(FrF,Layout,uResp,'~/Clean_BClust/pediatric_HF')
+
+stop('') #just see if you can produce to here
 
 #############################
 #classification
