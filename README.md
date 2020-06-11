@@ -143,7 +143,7 @@ uFrF=FrF[UnstimSamps,]
 vizFrequencyMap(FrF,Layout,uResp,getwd())
 ```
 
-#classification
+# Classification
 
 You can use the feature matrices together for a classification task for this unstim comparison
 
@@ -155,3 +155,60 @@ Joint=cbind(FrF,uFrF)
 
 Your response variable is `uResp`. Use your favorite cross validation technique with features, `Joint` and response `uResp`.
 
+# Analysis for each stim
+
+* In general, for each stim, we subtract the unstim features for each patient from their stim features to build a new matrix
+
+* The first step is to create a match matrix for indices so we are subtracting correctly.
+
+* The output will be something called stim list, which for each stim the ith row will record index for unstimsample in column 1 and stim sample in column 2
+
+```R
+
+UStim=unique(Stim)[1:4] #there are 4 stims and we exclude unstim
+PID=paste('p',PID,sep='_')
+UPat=unique(PID)
+StimList=list()
+
+for(u in 1:length(UStim)){
+StimCand=grep(UStim[u],FNames)
+UnstimInd=c()
+MatchInds=c()
+for(j in 1:length(UPat)){
+c1=grep('Unstim',FNames)
+c2=which(PID==UPat[j])          
+intVal=intersect(c1,c2)
+if(length(intVal)==0){
+UnStimInd=c(UnstimInd,NA)
+}
+else{UnstimInd=c(UnstimInd,intVal)}
+
+c11=grep(UStim[u],FNames)
+intVal2=intersect(c11,c2)
+if(length(intVal2)==0){
+MatchInds=c(MatchInds,NA)
+}
+else{MatchInds=c(MatchInds,intVal2)}
+}
+
+newArray=cbind(UnstimInd,MatchInds)
+StimList[[u]]=newArray
+}
+
+names(StimList)=UStim
+
+```
+
+* This means that in the ith element of your list, you will have unstim indices (column 1) and corresponding stim indices in column 2. 
+
+* Always good to check if it's right. First stim is GMCSF
+
+* Let's see if indices actually map to the correct thing
+
+* It should pull the unstim sample and GCSF
+
+```R
+Test1=StimList[[1]][5,1]
+Test2=StimList[[1]][5,2]
+print(FNames[Test1])
+```
