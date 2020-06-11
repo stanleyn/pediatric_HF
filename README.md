@@ -150,7 +150,7 @@ You can use the feature matrices together for a classification task for this uns
 let's make a joint set of features
 
 ```R
-Joint=cbind(FrF,uFrF)
+Joint=cbind(uFrF,ufFeat)
 ```
 
 Your response variable is `uResp`. Use your favorite cross validation technique with features, `Joint` and response `uResp`.
