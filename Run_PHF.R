@@ -61,7 +61,7 @@ ToUse=PhenoInds
 source('VoPo_StandardAnalysis/runRepMetaclust.R')
 
 #for cluster-level visualization, I like to use 200 iterations. 50 clusters and 1000 numCPF are default parameters
-Build=runRepMetaclust(200,50,FileNames,doCPF='specify',numCPF=1000,MN,ToUse,35)
+#Build=runRepMetaclust(200,50,FileNames,doCPF='specify',numCPF=1000,MN,ToUse,35)
 
 ##################################
 #Basic plots
@@ -69,37 +69,37 @@ Build=runRepMetaclust(200,50,FileNames,doCPF='specify',numCPF=1000,MN,ToUse,35)
 #Let's make the VoPo plots so that we can see what is important
 
 #Phenotype related plots
-source('VoPo_StandardAnalysis/vizClusterPhenotype.R')
-Layout=vizClusterPhenotype(Build,ToUse,'~/Clean_BClust/pediatric_HF/Phenotype')
+#source('VoPo_StandardAnalysis/vizClusterPhenotype.R')
+#Layout=vizClusterPhenotype(Build,ToUse,'~/Clean_BClust/pediatric_HF/Phenotype')
 
 #Let's do analysis of unstim samples first
-UnstimSamps=which(Stim=='Unstim')
+#UnstimSamps=which(Stim=='Unstim')
 
 #let's extract function-based features
-source('VoPo_StandardAnalysis/vizFunctionMaps.R')
-source('VoPo_StandardAnalysis/getFunctionalFeature.R')
+#source('VoPo_StandardAnalysis/vizFunctionMaps.R')
+#source('VoPo_StandardAnalysis/getFunctionalFeature.R')
 
 #Analysis of functional differences#
 
 #extract functional features from VoPo object
-fFeat=getFunctionalFeature(Build,FNames,FuncInds)
-ufFeat=fFeat[UnstimSamps,]
+#fFeat=getFunctionalFeature(Build,FNames,FuncInds)
+#ufFeat=fFeat[UnstimSamps,]
 
 #and class labels that correspond
-uResp=Class[UnstimSamps]
+#uResp=Class[UnstimSamps]
 
 #make maps
-vizFunctionMaps(Layout,ufFeat,MN,FuncInds,uResp,'~/Clean_BClust/pediatric_HF/Func_unstim')
+#vizFunctionMaps(Layout,ufFeat,MN,FuncInds,uResp,'~/Clean_BClust/pediatric_HF/Func_unstim')
 
 #Analysis of frequency differences#
-source('VoPo_StandardAnalysis/vizFrequencyMap.R')
-source('VoPo_StandardAnalysis/getFrequencyFeature.R')
-FrF=getFrequencyFeature(Build,FNames)
-uFrF=FrF[UnstimSamps,]
+#source('VoPo_StandardAnalysis/vizFrequencyMap.R')
+#source('VoPo_StandardAnalysis/getFrequencyFeature.R')
+#FrF=getFrequencyFeature(Build,FNames)
+#uFrF=FrF[UnstimSamps,]
 
-vizFrequencyMap(FrF,Layout,uResp,'~/Clean_BClust/pediatric_HF')
+#vizFrequencyMap(FrF,Layout,uResp,'~/Clean_BClust/pediatric_HF')
 
-stop('') #just see if you can produce to here
+#stop('') #just see if you can produce to here
 
 #############################
 #classification
@@ -164,14 +164,24 @@ Test2=StimList[[1]][5,2]
 print(FNames[Test1])
 print(FNames[Test2])
 
+#created directories to store these plots
+Direcs=c('GMCSF','IFNa','IL','LPS')
+print('test')
+for(i in 1:length(StimList)){
 
-#Now you can get the associated feature matrices for each stim by subtracting their features
-#for example for frequency map for GCSF (which is the first element in our list)
-#again, we are subtracting the stim value 
-GCSF_FrF=FrF[StimList[[1]][,2],]-FrF[StimList[[1]][,1],]
+print('here')
+direc=Direcs[i]
+uResp=Class[StimList[[i]][,1]]
 
-#Then you can make the map for frequency
-vizFunctionMaps(Layout,GCSF_FrF,MN,FuncInds,uResp,'~/Clean_BClust/pediatric_HF/Func_unstim')
+#frequency features
+GCSF_FrF=FrF[StimList[[i]][,2],]-FrF[StimList[[i]][,1],]
+vizFrequencyMap(FrF,Layout,uResp,direc)
+
+GCSF_FuF=fFeat[StimList[[i]][,2],]-fFeat[StimList[[i]][,1],]
+vizFunctionMaps(Layout,GCSF_FuF,MN,FuncInds,uResp,direc)
+
+
+}
 
 
 
