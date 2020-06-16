@@ -228,3 +228,33 @@ Then you can make the map for frequency
 ```R
 vizFunctionMaps(Layout,GCSF_FrF,MN,FuncInds,uResp,'~/Clean_BClust/pediatric_HF/Func_unstim')
 ```
+
+## Generating a feature matrix and visualization map for all of the Stims
+
+```R
+Direcs=c('GMCSF','IFNa','IL','LPS')
+for(i in 1:length(StimList)){
+
+print('here')
+direc=Direcs[i]
+uResp=Class[StimList[[i]][,1]]
+
+#frequency features
+GCSF_FrF=FrF[StimList[[i]][,2],]-FrF[StimList[[i]][,1],]
+#vizFrequencyMap(FrF,Layout,uResp,direc)
+
+GCSF_FuF=fFeat[StimList[[i]][,2],]-fFeat[StimList[[i]][,1],]
+#vizFunctionMaps(Layout,GCSF_FuF,MN,FuncInds,uResp,direc)
+
+#create the joint matrix and save
+Joint_Stim=cbind(GCSF_FuF,GCSF_FrF)
+FName_Matrix=paste('FeatMats/',names(StimList)[i],'_','dataMatrix','.rda',sep='')
+save(Joint,file=FName_Matrix)
+
+#save response variable (created above as uResp
+FName_Class=paste('FeatMats/',names(StimList)[i],'_','responseVector','.rda',sep='')
+save(uResp,file=FName_Class)
+
+
+}
+```
