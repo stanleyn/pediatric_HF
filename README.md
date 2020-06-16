@@ -156,9 +156,9 @@ Joint=cbind(uFrF,ufFeat)
 Your response variable is `uResp`. Use your favorite cross validation technique with features, `Joint` and response `uResp`.
 
 
-## Saving The unstim data matrix and response vector to the `FeatMat` directory
+## Saving The unstim data matrix and response vector to the `FeatMats` directory
 
-Run the following code to save the data matrix and repsonse vector to the Feat Mat directory. You will see below that we do the same and also save and rda file and response vector for each stimulation
+Run the following code to save the data matrix and repsonse vector to the `FeatMats` directory. You will see below that we do the same and also save and rda file and response vector for each stimulation
 
 ```R
 #save data matrix
