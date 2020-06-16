@@ -155,6 +155,18 @@ Joint=cbind(uFrF,ufFeat)
 
 Your response variable is `uResp`. Use your favorite cross validation technique with features, `Joint` and response `uResp`.
 
+
+## Saving The unstim data matrix and response vector to the `FeatMat` directory
+
+Run the following code to save the data matrix and repsonse vector to the Feat Mat directory. You will see below that we do the same and also save and rda file and response vector for each stimulation
+
+```R
+#save data matrix
+save(Joint,file='FeatMats/unstim_dataMatrix.rda')
+#save response vector (sample classes)
+save(uResp,file='FeatMats/unstim_responseVector.rda')
+```
+
 # Analysis for each stim
 
 * In general, for each stim, we subtract the unstim features for each patient from their stim features to build a new matrix
@@ -231,6 +243,12 @@ vizFunctionMaps(Layout,GCSF_FrF,MN,FuncInds,uResp,'~/Clean_BClust/pediatric_HF/F
 
 ## Generating a feature matrix and visualization map for all of the Stims
 
+* For each stimulation, you will be able to write its feature matrix and the corresponding response vector to the directory FeatMats.
+
+* For example, let's say you want LPS feature matrix and response vector. Feature matrix will be in the dorectory `FeatMat` as `LPS_dataMatrix.rda`. The response vector will be `LPS_responseVector.rda`.
+
+* Once you have run the below loop you will have generated this for each stimulation.
+
 ```R
 Direcs=c('GMCSF','IFNa','IL','LPS')
 for(i in 1:length(StimList)){
@@ -251,7 +269,7 @@ Joint_Stim=cbind(GCSF_FuF,GCSF_FrF)
 FName_Matrix=paste('FeatMats/',names(StimList)[i],'_','dataMatrix','.rda',sep='')
 save(Joint,file=FName_Matrix)
 
-#save response variable (created above as uResp
+#save response vector (created above as uResp)
 FName_Class=paste('FeatMats/',names(StimList)[i],'_','responseVector','.rda',sep='')
 save(uResp,file=FName_Class)
 

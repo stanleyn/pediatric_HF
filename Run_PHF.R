@@ -2,7 +2,7 @@
 #purpose: running pediatric HF analysis
 
 library('flowCore')
-
+source('~/Clean_BClust/General/Class_Plain.R')
 ######################################
 #Step 1:Pre-processing: finding data, separating functional and phenotypic markers, etc
 ######################################
@@ -73,29 +73,29 @@ source('VoPo_StandardAnalysis/runRepMetaclust.R')
 #Layout=vizClusterPhenotype(Build,ToUse,'~/Clean_BClust/pediatric_HF/Phenotype')
 
 #Let's do analysis of unstim samples first
-#UnstimSamps=which(Stim=='Unstim')
+UnstimSamps=which(Stim=='Unstim')
 
 #let's extract function-based features
-#source('VoPo_StandardAnalysis/vizFunctionMaps.R')
-#source('VoPo_StandardAnalysis/getFunctionalFeature.R')
+source('VoPo_StandardAnalysis/vizFunctionMaps.R')
+source('VoPo_StandardAnalysis/getFunctionalFeature.R')
 
 #Analysis of functional differences#
 
 #extract functional features from VoPo object
-#fFeat=getFunctionalFeature(Build,FNames,FuncInds)
-#ufFeat=fFeat[UnstimSamps,]
+fFeat=getFunctionalFeature(Build,FNames,FuncInds)
+ufFeat=fFeat[UnstimSamps,]
 
 #and class labels that correspond
-#uResp=Class[UnstimSamps]
+uResp=Class[UnstimSamps]
 
 #make maps
 #vizFunctionMaps(Layout,ufFeat,MN,FuncInds,uResp,'~/Clean_BClust/pediatric_HF/Func_unstim')
 
 #Analysis of frequency differences#
-#source('VoPo_StandardAnalysis/vizFrequencyMap.R')
-#source('VoPo_StandardAnalysis/getFrequencyFeature.R')
-#FrF=getFrequencyFeature(Build,FNames)
-#uFrF=FrF[UnstimSamps,]
+source('VoPo_StandardAnalysis/vizFrequencyMap.R')
+source('VoPo_StandardAnalysis/getFrequencyFeature.R')
+FrF=getFrequencyFeature(Build,FNames)
+uFrF=FrF[UnstimSamps,]
 
 #vizFrequencyMap(FrF,Layout,uResp,'~/Clean_BClust/pediatric_HF')
 
@@ -108,10 +108,20 @@ source('VoPo_StandardAnalysis/runRepMetaclust.R')
 #You can use the feature matrices together for a classification task for this unstim comparison
 
 #let's make a joint set of features
-#Joint=cbind(FrF,uFrF)
+Joint=cbind(ufFeat,uFrF)
+uResp=factor(uResp)
+
+#save data matrix
+save(Joint,file='FeatMats/unstim_dataMatrix.rda')
+#save response vector (sample classes)
+save(uResp,file='FeatMats/unstim_responseVector.rda')
+
+
+#getClass=Class_Plain(Joint,uResp)
+
+
 
 #Your response variable is uResp. Use your favorite cross validation technique with features, Joint and response uResp.
-
 ###########################
 #stim analyses
 ##########################
@@ -175,10 +185,19 @@ uResp=Class[StimList[[i]][,1]]
 
 #frequency features
 GCSF_FrF=FrF[StimList[[i]][,2],]-FrF[StimList[[i]][,1],]
-vizFrequencyMap(FrF,Layout,uResp,direc)
+#vizFrequencyMap(FrF,Layout,uResp,direc)
 
 GCSF_FuF=fFeat[StimList[[i]][,2],]-fFeat[StimList[[i]][,1],]
-vizFunctionMaps(Layout,GCSF_FuF,MN,FuncInds,uResp,direc)
+#vizFunctionMaps(Layout,GCSF_FuF,MN,FuncInds,uResp,direc)
+
+#create the joint matrix and save
+Joint_Stim=cbind(GCSF_FuF,GCSF_FrF)
+FName_Matrix=paste('FeatMats/',names(StimList)[i],'_','dataMatrix','.rda',sep='')
+save(Joint,file=FName_Matrix)
+
+#save response variable (created above as uResp
+FName_Class=paste('FeatMats/',names(StimList)[i],'_','responseVector','.rda',sep='')
+save(uResp,file=FName_Class)
 
 
 }
