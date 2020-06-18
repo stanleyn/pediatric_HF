@@ -259,7 +259,7 @@ uResp=Class[StimList[[i]][,1]]
 
 #frequency features
 GCSF_FrF=FrF[StimList[[i]][,2],]-FrF[StimList[[i]][,1],]
-#vizFrequencyMap(FrF,Layout,uResp,direc)
+#vizFrequencyMap(GCSF_FrF,Layout,uResp,direc)
 
 GCSF_FuF=fFeat[StimList[[i]][,2],]-fFeat[StimList[[i]][,1],]
 #vizFunctionMaps(Layout,GCSF_FuF,MN,FuncInds,uResp,direc)

@@ -62,15 +62,16 @@ source('VoPo_StandardAnalysis/runRepMetaclust.R')
 
 #for cluster-level visualization, I like to use 200 iterations. 50 clusters and 1000 numCPF are default parameters
 #Build=runRepMetaclust(200,50,FileNames,doCPF='specify',numCPF=1000,MN,ToUse,35)
-
+Build=readRDS('~/Clean_BClust/ped_HF_build/phf_build')
+print('data loaded')
 ##################################
 #Basic plots
 ####################################
 #Let's make the VoPo plots so that we can see what is important
 
 #Phenotype related plots
-#source('VoPo_StandardAnalysis/vizClusterPhenotype.R')
-#Layout=vizClusterPhenotype(Build,ToUse,'~/Clean_BClust/pediatric_HF/Phenotype')
+source('VoPo_StandardAnalysis/vizClusterPhenotype.R')
+Layout=vizClusterPhenotype(Build,ToUse,'~/Clean_BClust/pediatric_HF/Phenotype')
 
 #Let's do analysis of unstim samples first
 UnstimSamps=which(Stim=='Unstim')
@@ -83,7 +84,7 @@ source('VoPo_StandardAnalysis/getFunctionalFeature.R')
 
 #extract functional features from VoPo object
 fFeat=getFunctionalFeature(Build,FNames,FuncInds)
-ufFeat=fFeat[UnstimSamps,]
+#ufFeat=fFeat[UnstimSamps,]
 
 #and class labels that correspond
 uResp=Class[UnstimSamps]
@@ -95,7 +96,7 @@ uResp=Class[UnstimSamps]
 source('VoPo_StandardAnalysis/vizFrequencyMap.R')
 source('VoPo_StandardAnalysis/getFrequencyFeature.R')
 FrF=getFrequencyFeature(Build,FNames)
-uFrF=FrF[UnstimSamps,]
+#uFrF=FrF[UnstimSamps,]
 
 #vizFrequencyMap(FrF,Layout,uResp,'~/Clean_BClust/pediatric_HF')
 
@@ -108,13 +109,13 @@ uFrF=FrF[UnstimSamps,]
 #You can use the feature matrices together for a classification task for this unstim comparison
 
 #let's make a joint set of features
-Joint=cbind(ufFeat,uFrF)
-uResp=factor(uResp)
+#Joint=cbind(ufFeat,uFrF)
+#uResp=factor(uResp)
 
 #save data matrix
-save(Joint,file='FeatMats/unstim_dataMatrix.rda')
+#save(Joint,file='FeatMats/unstim_dataMatrix.rda')
 #save response vector (sample classes)
-save(uResp,file='FeatMats/unstim_responseVector.rda')
+#save(uResp,file='FeatMats/unstim_responseVector.rda')
 
 
 #getClass=Class_Plain(Joint,uResp)
@@ -185,19 +186,20 @@ uResp=Class[StimList[[i]][,1]]
 
 #frequency features
 GCSF_FrF=FrF[StimList[[i]][,2],]-FrF[StimList[[i]][,1],]
-#vizFrequencyMap(FrF,Layout,uResp,direc)
+print('vizualizing frequency map')
+vizFrequencyMap(GCSF_FrF,Layout,uResp,direc)
 
 GCSF_FuF=fFeat[StimList[[i]][,2],]-fFeat[StimList[[i]][,1],]
 #vizFunctionMaps(Layout,GCSF_FuF,MN,FuncInds,uResp,direc)
 
 #create the joint matrix and save
-Joint_Stim=cbind(GCSF_FuF,GCSF_FrF)
-FName_Matrix=paste('FeatMats/',names(StimList)[i],'_','dataMatrix','.rda',sep='')
-save(Joint,file=FName_Matrix)
+#Joint_Stim=cbind(GCSF_FuF,GCSF_FrF)
+#FName_Matrix=paste('FeatMats/',names(StimList)[i],'_','dataMatrix','.rda',sep='')
+#save(Joint,file=FName_Matrix)
 
 #save response variable (created above as uResp
-FName_Class=paste('FeatMats/',names(StimList)[i],'_','responseVector','.rda',sep='')
-save(uResp,file=FName_Class)
+#FName_Class=paste('FeatMats/',names(StimList)[i],'_','responseVector','.rda',sep='')
+#save(uResp,file=FName_Class)
 
 
 }
