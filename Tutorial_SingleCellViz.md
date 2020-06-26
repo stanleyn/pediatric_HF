@@ -54,10 +54,10 @@ Make single-cell map for function specifying the directory `myDirec`
 ```R
 vizAtlas_Function(CellMat,Build,ufFeat,uResp,ToUse,SampsToUse=NULL,35,tRes,myDirec,MN[FuncInds],50)
 ```
-Make plots for phenotype
+Make plots for phenotype and save to directory `PhenDirec`
 
 ```R
-vizAtlas_Phenotype(CellMat,tRes,'~/shit/Phen_test')
+vizAtlas_Phenotype(CellMat,tRes,PhenDirec)
 ```
 Get frequency based features
 
