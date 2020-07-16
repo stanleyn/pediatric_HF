@@ -92,6 +92,10 @@ Build=runRepMetaclust(200,50,FileNames,doCPF='specify',numCPF=1000,MN,ToUse,35)
 
 # Step 3: Basic plots
 
+**Maria, see the README_SingleCellViz.md to make the better visualizations**
+
+**You can skip this part if you want to only make feature matrices**
+
 Let's make the VoPo plots so that we can see what is important
 
 First, Phenotype related plots. We are coloring each cluster by its phenotypic marker expresssion.  
