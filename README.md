@@ -267,7 +267,7 @@ GCSF_FuF=fFeat[StimList[[i]][,2],]-fFeat[StimList[[i]][,1],]
 #create the joint matrix and save
 Joint_Stim=cbind(GCSF_FuF,GCSF_FrF)
 FName_Matrix=paste('FeatMats/',names(StimList)[i],'_','dataMatrix','.rda',sep='')
-save(Joint,file=FName_Matrix)
+save(Joint_Stim,file=FName_Matrix)
 
 #save response vector (created above as uResp)
 FName_Class=paste('FeatMats/',names(StimList)[i],'_','responseVector','.rda',sep='')
