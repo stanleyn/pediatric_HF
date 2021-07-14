@@ -1,6 +1,6 @@
 Date: June 8, 2020
 
-* purpose: running pediatric HF analysis
+* purpose: running pediatric HF analysis. But lately, a good tutorial for people learning how to use VoPo on complicated cytof datasets with multiple stims, etc. 
 
 * dependencies: flowCore, foreach, doParallel, iterators, plyr, randomForest, matrixStats, ROCR, FastKNN, miscTools, viridis, ggplot2, reshape2
 
