@@ -1,5 +1,7 @@
 Date: June 8, 2020
 
+* Tutorial: This is a good accompany to the Vopo repository with more comprehensive examples. See `Tutorial_SingleCellViz.md` for more viusalization examples. 
+
 * purpose: running pediatric HF analysis. But lately, a good tutorial for people learning how to use VoPo on complicated cytof datasets with multiple stims, etc. 
 
 * dependencies: flowCore, foreach, doParallel, iterators, plyr, randomForest, matrixStats, ROCR, FastKNN, miscTools, viridis, ggplot2, reshape2
